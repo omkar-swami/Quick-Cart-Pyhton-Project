@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ShopEase - Your Online Store</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <!-- Animate.css -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        /* Hero Section */
+        .hero-header {
+            position: relative;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.7), rgba(0, 200, 255, 0.7)),
+                        url('{{ url_for('static', filename='images/sh2.jpg') }}') center/cover no-repeat;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .hero-header::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255,193,7,0.25), transparent 60%),
+                        radial-gradient(circle at bottom right, rgba(255,111,97,0.25), transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-header h1 {
+            font-weight: bold;
+            text-shadow: 3px 3px 15px rgba(0,0,0,0.8);
+            animation: fadeInDown 1.5s;
+        }
+
+        .hero-header h4 {
+            letter-spacing: 2px;
+            animation: fadeInLeft 2s;
+        }
+
+        .hero-header .btn-custom {
+            animation: fadeInUp 2s;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .carousel-inner img {
+            height: 420px;
+            object-fit: cover;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .carousel-caption {
+            background: rgba(0,0,0,0.65);
+            border-radius: 15px;
+            padding: 15px 20px;
+            animation: fadeInUp 1.5s;
+        }
+
+        /* Features */
+        .featurs-item {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 2px solid transparent;
+        }
+        .featurs-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-color: #ffc107;
+        }
+
+        /* Section Title */
+        h2.section-title {
+            font-weight: bold;
+            position: relative;
+            display: inline-block;
+        }
+        h2.section-title::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, #ffc107, #ff6f61);
+            border-radius: 2px;
+        }
+
+        /* ---------------------------
+            UPDATED SMALLER CONTACT SECTION
+        --------------------------- */
+        .contact-section {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+
+            /* Reduced height */
+            padding-top: 40px !important;
+            padding-bottom: 40px !important;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px; /* smaller */
+            text-align: center;
+            color: white;
+            backdrop-filter: blur(8px);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-card i {
+            font-size: 35px;
+            margin-bottom: 10px; /* smaller */
+            color: #ffc107;
+        }
+
+        .contact-section .subtitle {
+            margin-bottom: 15px;
+        }
+
+        /* Buttons */
+        .btn-custom {
+            background: linear-gradient(45deg, #ff6f61, #ffc107);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .btn-custom:hover {
+            background: linear-gradient(45deg, #ffc107, #ff6f61);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+
+{% include 'navbar.html' %}
+
+<!-- Hero Section -->
+<div class="container-fluid hero-header">
+    <div class="container py-5">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-12 col-lg-7 animate__animated animate__fadeInLeft">
+                <h4 class="mb-3 text-light">Welcome to ShopEase</h4>
+                <h1 class="mb-5 display-3">Your One-Stop Online Shopping Destination</h1>
+            </div>
+
+            <div class="col-md-12 col-lg-5 animate__animated animate__fadeInRight">
+                <div id="carouselId" class="carousel slide position-relative" data-bs-ride="carousel">
+                    <div class="carousel-inner shadow-lg rounded">
+
+                        <div class="carousel-item active">
+                            <img src="{{ url_for('static', filename='images/dress.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Trendy Dresses</h5>
+                                <p>Latest fashion at your doorstep</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/laptop.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Smart Laptops</h5>
+                                <p>Powerful devices for work & play</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/Appliance.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Appliance</h5>
+                                <p>Smart Home Appliances</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/watch.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Stylish Watches</h5>
+                                <p>Timepieces that define elegance</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/beauty.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Beauty Products</h5>
+                                <p>Enhance your natural glow</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/Books.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Books</h5>
+                                <p>Endless knowledge, infinite stories</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/Footwear.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Trendy Footwear</h5>
+                                <p>Walk with confidence</p>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <img src="{{ url_for('static', filename='images/Jewellery.jpeg') }}" class="d-block w-100">
+                            <div class="carousel-caption">
+                                <h5>Jewellery Collection</h5>
+                                <p>Elegance in every detail</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container-fluid featurs py-3">
+    <div class="container py-3 text-center">
+        <h2 class="section-title mb-5">Why Shop With Us?</h2>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item animate__animated animate__zoomIn">
+                    <i class="fas fa-truck-fast fa-3x text-warning mb-3"></i>
+                    <h5>Free Shipping</h5>
+                    <p>On all orders over $100</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item animate__animated animate__zoomIn">
+                    <i class="fas fa-rotate-left fa-3x text-warning mb-3"></i>
+                    <h5>Easy Returns</h5>
+                    <p>30 days money-back guarantee</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item animate__animated animate__zoomIn">
+                    <i class="fas fa-lock fa-3x text-warning mb-3"></i>
+                    <h5>Secure Payment</h5>
+                    <p>100% secure transactions</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="featurs-item animate__animated animate__zoomIn">
+                    <i class="fas fa-headset fa-3x text-warning mb-3"></i>
+                    <h5>24/7 Support</h5>
+                    <p>We’re here whenever you need us</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Section (SMALLER) -->
+<section class="contact-section py-5" id="contact">
+    <div class="container text-center">
+        <div class="mb-4 animate__animated animate__fadeInDown">
+            <h6 class="text-uppercase fw-bold text-warning">Contact Us</h6>
+            <h2 class="fw-bold display-6">We’d Love To Hear From You</h2>
+            <p class="subtitle fs-5 text-light">
+                Whether it’s questions, feedback, or support — we’re here to help.
+            </p>
+        </div>
+
+        <div class="row g-3 justify-content-center">
+            <div class="col-md-6 col-lg-6">
+                <div class="contact-card animate__animated animate__zoomIn h-100">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>Address</h4>
+                    <p>123 Market Street, Pune, India</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+                <div class="contact-card animate__animated animate__zoomIn h-100">
+                    <i class="fas fa-phone-alt"></i>
+                    <h4>Phone</h4>
+                    <p>+91 98765 43210</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+                <div class="contact-card animate__animated animate__zoomIn h-100">
+                    <i class="fas fa-envelope"></i>
+                    <h4>Email</h4>
+                    <p>info@shopease.com</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6">
+                <div class="contact-card animate__animated animate__zoomIn h-100">
+                    <i class="fab fa-whatsapp"></i>
+                    <h4>WhatsApp</h4>
+                    <p>+91 98765 43210</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Bootstrap JS -->
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>
